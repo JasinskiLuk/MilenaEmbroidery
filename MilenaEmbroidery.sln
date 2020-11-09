@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilenaEmbroidery.WebApp", "MilenaEmbroidery.WebApp\MilenaEmbroidery.WebApp.csproj", "{475D6B43-6F96-4B4F-9E1E-0D5C9AFF1A2B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MilenaEmbroidery.SQL", "MilenaEmbroidery.SQL\MilenaEmbroidery.SQL.sqlproj", "{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilenaEmbroidery.DbServices", "MilenaEmbroidery.DbServices\MilenaEmbroidery.DbServices.csproj", "{5B3B267F-7BBB-4AF8-8585-6BE0A982E46A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilenaEmbroidery.IServices", "MilenaEmbroidery.IServices\MilenaEmbroidery.IServices.csproj", "{EA19AC11-916F-4CDF-B922-D48B1DD52CDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilenaEmbroidery.Interfaces", "MilenaEmbroidery.Interfaces\MilenaEmbroidery.Interfaces.csproj", "{7C5DD0D4-DF2D-4A07-A746-0E4A511940DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilenaEmbroidery.DTOs", "MilenaEmbroidery.DTOs\MilenaEmbroidery.DTOs.csproj", "{CF9FA7FB-3BE0-4376-B0E9-D6B792E16224}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{475D6B43-6F96-4B4F-9E1E-0D5C9AFF1A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475D6B43-6F96-4B4F-9E1E-0D5C9AFF1A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475D6B43-6F96-4B4F-9E1E-0D5C9AFF1A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475D6B43-6F96-4B4F-9E1E-0D5C9AFF1A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB688B47-DA66-4C10-B4BF-3DA7D0764EA4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5B3B267F-7BBB-4AF8-8585-6BE0A982E46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B3B267F-7BBB-4AF8-8585-6BE0A982E46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B3B267F-7BBB-4AF8-8585-6BE0A982E46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B3B267F-7BBB-4AF8-8585-6BE0A982E46A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA19AC11-916F-4CDF-B922-D48B1DD52CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA19AC11-916F-4CDF-B922-D48B1DD52CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA19AC11-916F-4CDF-B922-D48B1DD52CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA19AC11-916F-4CDF-B922-D48B1DD52CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5DD0D4-DF2D-4A07-A746-0E4A511940DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5DD0D4-DF2D-4A07-A746-0E4A511940DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5DD0D4-DF2D-4A07-A746-0E4A511940DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5DD0D4-DF2D-4A07-A746-0E4A511940DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF9FA7FB-3BE0-4376-B0E9-D6B792E16224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF9FA7FB-3BE0-4376-B0E9-D6B792E16224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF9FA7FB-3BE0-4376-B0E9-D6B792E16224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF9FA7FB-3BE0-4376-B0E9-D6B792E16224}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9BF7260-7DA0-4D70-9BFB-B95F653EC0CA}
+	EndGlobalSection
+EndGlobal
