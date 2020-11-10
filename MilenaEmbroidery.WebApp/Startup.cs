@@ -24,6 +24,7 @@ namespace MilenaEmbroidery.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+                    //.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);  Add JSON options
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddScoped<IProductService, DbProductService>();
@@ -62,7 +63,14 @@ namespace MilenaEmbroidery.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Shop}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                
+                //Endpoint for Areas
+                /*
+                endpoints.MapControllerRoute(
+                   name: "MyAreas",
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                */
             });
         }
     }
