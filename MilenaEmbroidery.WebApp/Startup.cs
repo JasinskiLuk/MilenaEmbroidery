@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MilenaEmbroidery.DbServices.Shop;
+using MilenaEmbroidery.IServices.Shop;
 using System;
 using System.Data;
 
@@ -23,6 +25,8 @@ namespace MilenaEmbroidery.WebApp
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+
+            services.AddScoped<IProductService, DbProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +62,7 @@ namespace MilenaEmbroidery.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Shop}/{action=Index}/{id?}");
             });
         }
     }
