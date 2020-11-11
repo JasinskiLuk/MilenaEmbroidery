@@ -1,0 +1,49 @@
+﻿
+@model IEnumerable<ProductDTO>
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<div id="products">
+    <div id="vue" class="esh-catalog-items row">
+        <div class="esh-catalog-item col-md-4" v-for="param in parameters">
+            <img class="esh-catalog-thumbnail" v-bind:src="param.pictureLink"  width="200" height="200" />
+            <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
+            <div class="esh-catalog-name">
+                <span>{{param.name}}</span>
+            </div>
+            <div class="esh-catalog-price">
+                <span>{{param.price}}</span>
+            </div>
+            <div v-if="param.isLimited">
+                <span>{{param.countLimited}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var vue = new Vue({
+            el: '#vue',
+            data: {
+                parameters: []
+            },
+            mounted() {
+                this.loadData()
+            },
+            methods: {
+                loadData() {
+                    axios({
+                        method: 'get',
+                        url: '/Product/Get',
+                    }).then(response => this.parameters = response.data);
+                }
+            }
+        });
+    </script>
+}

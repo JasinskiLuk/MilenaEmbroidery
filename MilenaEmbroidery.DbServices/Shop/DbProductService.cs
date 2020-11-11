@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MilenaEmbroidery.DTOs.Shop;
 using MilenaEmbroidery.IServices.Shop;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.DbServices.Shop
@@ -33,9 +36,17 @@ namespace MilenaEmbroidery.DbServices.Shop
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ProductDTO>> Get()
+        public async Task<IEnumerable<ProductDTO>> Get()
         {
-            throw new NotImplementedException();
+            //throw new Exception("test exception - service");
+
+            IEnumerable<ProductDTO> products = Enumerable.Empty<ProductDTO>();
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            products = await conn.QueryAsync<ProductDTO>(@"SELECT * FROM [Shop].[Products]");
+
+            return products;
         }
 
         public Task<bool> CheckIfExists(int Id)

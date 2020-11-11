@@ -1,20 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MilenaEmbroidery.DTOs.Shop;
 using MilenaEmbroidery.IServices.Shop;
 using MilenaEmbroidery.WebApp.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.WebApp.Controllers
 {
-    public class ShopController : Controller
+    public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        public ShopController(IProductService productService)
+
+        public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Get()
+        {
+            IEnumerable<ProductDTO> products = Enumerable.Empty<ProductDTO>();
+
+            try
+            {
+                products = await _productService.Get();
+                //throw new Exception("test exception - controller");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
+            return Json(products);
         }
 
         public IActionResult Privacy()

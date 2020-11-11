@@ -10,6 +10,7 @@ namespace MilenaEmbroidery.DTOs.Shop
         public decimal CountLimited { get; set; }
         public DateTime DateAdded { get; set; }
         public decimal Price { get; set; }
+        public string PictureLink { get; set; }
     }
 
     public class NullProductDTO : ProductDTO
@@ -21,6 +22,7 @@ namespace MilenaEmbroidery.DTOs.Shop
             CountLimited = 0;
             DateAdded = DateTime.Today;
             Price = 0;
+            PictureLink = "N/A";
         }
     }
 }

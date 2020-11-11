@@ -39,7 +39,8 @@ CREATE TABLE [Shop].[Products]
 	[IsLimited] BIT NOT NULL DEFAULT 0,
 	[CountLimited] NUMERIC(8,2),
 	[DateAdded] DATETIME2 NOT NULL,
-	[Price] MONEY NOT NULL
+	[Price] MONEY NOT NULL,
+	[PictureLink] NVARCHAR(1000)
 );
 
 CREATE TABLE [Shop].[OrderStatus]
