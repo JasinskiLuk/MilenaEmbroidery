@@ -38,13 +38,18 @@ namespace MilenaEmbroidery.DbServices.Shop
 
         public async Task<IEnumerable<ProductDTO>> Get()
         {
-            //throw new Exception("test exception - service");
-
             IEnumerable<ProductDTO> products = Enumerable.Empty<ProductDTO>();
 
             SqlConnection conn = new SqlConnection(_connectionString);
-
-            products = await conn.QueryAsync<ProductDTO>(@"SELECT * FROM [Shop].[Products]");
+            
+            try
+            {
+                products = await conn.QueryAsync<ProductDTO>(@"SELECT * FROM [Shop].[Products]");
+            }
+            catch
+            {
+                throw;
+            }
 
             return products;
         }
