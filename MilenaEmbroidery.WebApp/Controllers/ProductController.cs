@@ -31,7 +31,6 @@ namespace MilenaEmbroidery.WebApp.Controllers
             try
             {
                 products = await _productService.Get();
-                //throw new Exception("test exception - controller");
             }
             catch (Exception ex)
             {

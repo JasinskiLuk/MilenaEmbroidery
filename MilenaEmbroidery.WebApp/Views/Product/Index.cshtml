@@ -10,24 +10,35 @@
 
 <div id="products">
     <div id="vue" class="esh-catalog-items row">
-        <div class="esh-catalog-item col-md-4" v-for="param in parameters">
-            <img class="esh-catalog-thumbnail" v-bind:src="param.pictureLink"  width="200" height="200" />
-            <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
-            <div class="esh-catalog-name">
-                <span>{{param.name}}</span>
-            </div>
-            <div class="esh-catalog-price">
-                <span>{{param.price}}</span>
-            </div>
-            <div v-if="param.isLimited">
-                <span>{{param.countLimited}}</span>
-            </div>
-        </div>
+        <parameter-list :parametr="parameter"
+                        v-for="parameter in parameters">
+        </parameter-list>
     </div>
 </div>
 
 @section Scripts {
+    <template id="list">
+        <div class="esh-catalog-item col-md-4">
+            <img class="esh-catalog-thumbnail" v-bind:src="parametr.pictureLink"  width="200" height="200" />
+            <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
+            <div class="esh-catalog-name">
+                <span>{{parametr.name}}</span>
+            </div>
+            <div class="esh-catalog-price">
+                <span>{{parametr.price}}</span>
+            </div>
+            <div v-if="parametr.isLimited">
+                <span>{{parametr.countLimited}}</span>
+            </div>
+        </div>
+    </template>
+
     <script>
+        Vue.component('parameter-list', {
+            props: ['parametr'],
+            template: '#list'
+        });
+
         var vue = new Vue({
             el: '#vue',
             data: {
@@ -41,255 +52,15 @@
                     axios({
                         method: 'get',
                         url: '/Product/Get',
-                    }).then(response => this.parameters = response.data);
+                    }).then(response => {
+                        this.parameters = response.data
+                    }).catch (error => {
+                        console.log(error.response.data)
+                        let message = error.response.data + "\n\n" + error.response.status;
+                        window.alert(message);
+                    })
                 }
             }
         });
     </script>
 }
-    
-    
-    
-    
-<!--
-<attachment 
-    v-for="attachment in attachments"
-    v-bind:key="'attachmentFile' + attachment.AttachmentDefinitionId"
-    v-bind:attachment="attachment"
-    v-on:attachment-updated="updateAttachmentData">
-</attachment>
-
-Vue.component('attachment', {
-    props: ['attachment'],
-    data() {
-        return {
-            file: ''
-        };
-    },
-    template: `
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <button class="btn btn-secondary" type="button" v-on:click="download">{{ attachment.AttachmentDefinitionName }}</button>
-            </div>
-            <input type="text" class="form-control" v-model="attachment.FileName" disabled v-if="attachment.FileName" />
-            <input type="text" class="form-control" value="Nie przesłano pliku" disabled v-else />
-            <div class="input-group-append">
-                <span class="input-group-text" v-if="attachment.Version > 0">Wersja {{ attachment.Version }}</span>
-                <button class="btn btn-info" type="button" v-on:click="openFilePicker">Prześlij plik</button>
-                <input type="file" ref="file" v-on:change="upload" hidden />
-                <button class="btn btn-secondary" type="button">Wizualizacja</button>
-            </div>
-        </div>`,
-    methods: {
-        openFilePicker() {
-            this.$refs.file.click();
-        },
-        upload() {
-            this.file = this.$refs.file.files[0];
-
-            let formData = new FormData();
-            formData.append('file', this.file);
-            formData.append('AttachmentId', this.attachment.AttachmentId);
-            formData.append('AttachmentDefinitionId', this.attachment.AttachmentDefinitionId);
-            formData.append('ProjectId', @(Model.ProjectId));
-
-            axios({
-                method: 'post',
-                url: '@(Url.Action("Upload", "Attachments"))',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
-            .then((response) => this.$emit('attachment-updated', response.data))
-            .catch(function (error) {
-                document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
-                document.getElementById('messageModalBody').innerHTML = error;
-
-                $("#messageModal").modal('show');
-            });
-        },
-        download(e) {
-            let baseDownloadUrl = '@Url.Action("DownloadFile", "Attachments", new { id = -1 })';
-
-            axios({
-                method: 'get',
-                url: baseDownloadUrl.replace('-1', this.attachment.AttachmentId),
-                responseType: 'blob'
-            })
-            .then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-
-                link.id = 'tempAttachmentHref';
-                link.href = url;
-                link.setAttribute('download', this.attachment.FileName);
-
-                document.body.appendChild(link);
-
-                link.click();
-
-                document.getElementById('tempAttachmentHref').remove();
-            })
-            .catch(function (error) {
-                document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
-                document.getElementById('messageModalBody').innerHTML = error;
-
-                $("#messageModal").modal('show');
-            });
-        }
-    }
-});
-
--------
-
-<attachment v-for="attachment in attachments"
-            v-bind:key="'attachmentFile' + attachment.AttachmentDefinitionId"
-            v-bind:attachment="attachment"
-            v-on:attachment-updated="updateAttachmentData"
-            v-on:show-history-requested="loadAttachmentHistory">
-</attachment>
-<historical-attachment v-for="attachment in attachmentHistory"
-                       v-bind:key="'historicalAttachment' + attachment.AttachmentHistoryId"
-                       v-bind:attachment="attachment">
-
-</historical-attachment>
-
-Vue.component('historical-attachment', {
-    props: ['attachment'],
-    template: `
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <button class="btn btn-primary" type="button" v-on:click="download"><span class="oi oi-data-transfer-download pr-2" title="Pobierz" aria-hidden="true"></span>V{{ attachment.Version }}</button>
-            </div>
-            <input type="text" class="form-control" v-model="attachment.FileName" disabled />
-            <div class="input-group-append">
-                <button class="btn btn-secondary" v-on:click="openVisualization">Wizualizacja</button>
-            </div>
-        </div>`,
-    methods: {
-        download() {
-            let baseDownloadUrl = '@Url.Action("DownloadFile", "AttachmentHistory", new { attachmentId = -1, version = -2 })';
-            let targetUrl = baseDownloadUrl.replace('-1', this.attachment.AttachmentId).replace('-2', this.attachment.Version);
-
-            axios({
-                method: 'get',
-                url: targetUrl,
-                responseType: 'blob'
-            })
-            .then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-
-                link.id = 'tempAttachmentHref';
-                link.href = url;
-                link.setAttribute('download', this.attachment.FileName);
-
-                document.body.appendChild(link);
-
-                link.click();
-
-                document.getElementById('tempAttachmentHref').remove();
-            })
-            .catch(function (error) {
-                document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
-                document.getElementById('messageModalBody').innerHTML = error;
-
-                $("#messageModal").modal('show');
-            });
-        },
-        openVisualization() {
-            let baseVisualizationFileUrl = '@Url.Action("Visualization", "Attachments", new { id = -1, version = -2 })';
-            let targetUrl = baseVisualizationFileUrl.replace('-1', this.attachment.AttachmentId).replace('-2', this.attachment.Version);
-
-            window.location.href = targetUrl;
-        }
-    }
-});
-
-Vue.component('attachment', {
-    props: ['attachment'],
-    data() {
-        return {
-            file: ''
-        };
-    },
-    template: `
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <button class="btn btn-primary" type="button" v-on:click="download"><span class="oi oi-data-transfer-download pr-2" title="Pobierz" aria-hidden="true"></span>{{ attachment.AttachmentDefinitionName }}</button>
-            </div>
-            <input type="text" class="form-control" v-model="attachment.FileName" disabled v-if="attachment.FileName" />
-            <input type="text" class="form-control" value="Nie przesłano pliku" disabled v-else />
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" v-if="attachment.Version > 0" v-on:click="openAttachmentHistory">Wersja {{ attachment.Version }}</button>
-                <button class="btn btn-info" type="button" v-on:click="openFilePicker">Prześlij plik</button>
-                <input type="file" ref="file" v-on:change="upload" hidden />
-                <button class="btn btn-secondary" v-on:click="openVisualization">Wizualizacja</button>
-            </div>
-        </div>`,
-    methods: {
-        openFilePicker() {
-            this.$refs.file.click();
-        },
-        upload() {
-            this.file = this.$refs.file.files[0];
-
-            let formData = new FormData();
-            formData.append('file', this.file);
-            formData.append('AttachmentId', this.attachment.AttachmentId);
-            formData.append('AttachmentDefinitionId', this.attachment.AttachmentDefinitionId);
-            formData.append('ProjectId', @(Model.ProjectId));
-
-            axios({
-                method: 'post',
-                url: '@(Url.Action("Upload", "Attachments"))',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
-            .then((response) => this.$emit('attachment-updated', response.data))
-            .catch(function (error) {
-                document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
-                document.getElementById('messageModalBody').innerHTML = error;
-
-                $("#messageModal").modal('show');
-            });
-        },
-        download() {
-            let baseDownloadUrl = '@Url.Action("DownloadFile", "Attachments", new { id = -1 })';
-
-            axios({
-                method: 'get',
-                url: baseDownloadUrl.replace('-1', this.attachment.AttachmentId),
-                responseType: 'blob'
-            })
-            .then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-
-                link.id = 'tempAttachmentHref';
-                link.href = url;
-                link.setAttribute('download', this.attachment.FileName);
-
-                document.body.appendChild(link);
-
-                link.click();
-
-                document.getElementById('tempAttachmentHref').remove();
-            })
-            .catch(function (error) {
-                document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
-                document.getElementById('messageModalBody').innerHTML = error;
-
-                $("#messageModal").modal('show');
-            });
-        },
-        openAttachmentHistory() {
-            this.$emit('show-history-requested', this.attachment.AttachmentId)
-        },
-        openVisualization() {
-            let baseVisualizationFileUrl = '@Url.Action("Visualization", "Attachments", new { id = -1 })';
-
-            window.location.href = baseVisualizationFileUrl.replace('-1', this.attachment.AttachmentId);
-        }
-    }
-});
--->
