@@ -35,7 +35,7 @@ namespace MilenaEmbroidery.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.GetBaseException().Message);
             }
 
             return Json(products);
