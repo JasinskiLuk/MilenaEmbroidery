@@ -18,18 +18,18 @@
 
 @section Scripts {
     <template id="list">
-        <div class="esh-catalog-item col-md-4">
-            <img class="esh-catalog-thumbnail" v-bind:src="parametr.pictureLink"  width="200" height="200" />
-            <input class="esh-catalog-button" type="submit" value="[ ADD TO BASKET ]" />
-            <div class="esh-catalog-name">
-                <span>{{parametr.name}}</span>
+        <div class="col-md-4 text-center">
+            <img v-bind:src="parametr.pictureLink" width="300" height="300" />
+            <div>
+                <span style="font-size: 250%"><b>{{parametr.name}}</b></span>
             </div>
-            <div class="esh-catalog-price">
-                <span>{{parametr.price}}</span>
+            <div>
+                <span>Price: {{parametr.price}} PLN</span>
             </div>
             <div v-if="parametr.isLimited">
-                <span>{{parametr.countLimited}}</span>
+                <span>Remaining: {{parametr.countLimited}}</span>
             </div>
+            <input type="submit" value="[ ADD TO BASKET ]" />
         </div>
     </template>
 

@@ -1,0 +1,59 @@
+﻿@model ProductDTO
+
+
+@{
+    ViewData["Title"] = "Add/edit product";
+}
+
+<body>
+
+    <h4>ProductDTO</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="BasicForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" class="form-control" hidden />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsLimited" /> @Html.DisplayNameFor(model => model.IsLimited)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountLimited" class="control-label"></label>
+                    <input asp-for="CountLimited" class="form-control" />
+                    <span asp-validation-for="CountLimited" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateAdded" class="control-label"></label>
+                    <input asp-for="DateAdded" class="form-control" />
+                    <span asp-validation-for="DateAdded" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PictureLink" class="control-label"></label>
+                    <input asp-for="PictureLink" class="form-control" />
+                    <span asp-validation-for="PictureLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</body>
+</html>
