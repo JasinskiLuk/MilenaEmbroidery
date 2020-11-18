@@ -60,5 +60,6 @@
   <ItemGroup>
     <None Include="Schema.sql" />
     <None Include="OrderStatus.sql" />
+    <None Include="Procedures.sql" />
   </ItemGroup>
 </Project>
