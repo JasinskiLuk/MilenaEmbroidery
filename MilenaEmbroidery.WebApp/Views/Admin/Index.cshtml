@@ -1,6 +1,5 @@
-﻿@model IEnumerable<ProductDTO>
-
-
+﻿
+@model IEnumerable<ProductDTO>
 
 @{
     ViewData["Title"] = "Admin page";
@@ -10,7 +9,7 @@
     <p>
         <a class="btn btn-primary" asp-controller="Admin" asp-action="BasicForm">Add new product</a>
     </p>
-    <table class="table">
+    <table class="table" style="background-color:aliceblue">
         <thead>
             <tr>
                 <th>
@@ -63,13 +62,12 @@
                         @Html.DisplayFor(modelItem => item.PictureLink)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Edit", "BasicForm", new { item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { item.Id })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </body>
-</html>

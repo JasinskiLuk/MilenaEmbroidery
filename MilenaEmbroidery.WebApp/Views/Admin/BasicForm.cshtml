@@ -3,15 +3,23 @@
 
 @{
     ViewData["Title"] = "Add/edit product";
+    string title = "Create product";
+    string action = "Create";
+
+    if (Model != null)
+    {
+        title = "Update product";
+        action = "Update";
+    }
 }
 
 <body>
 
-    <h4>ProductDTO</h4>
+    <h4>@title</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="BasicForm">
+            <form asp-action="@action">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input asp-for="Id" class="form-control" hidden />
                 <div class="form-group">
@@ -45,15 +53,15 @@
                     <span asp-validation-for="PictureLink" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="@action" class="btn btn-success" />
                 </div>
             </form>
         </div>
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
     </div>
 
 </body>
-</html>
+

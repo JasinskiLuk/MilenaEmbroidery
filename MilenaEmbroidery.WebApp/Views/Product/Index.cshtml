@@ -9,40 +9,40 @@
 </div>
 
 <div id="products">
-    <div id="vue" class="esh-catalog-items row">
-        <parameter-list :parametr="parameter"
-                        v-for="parameter in parameters">
-        </parameter-list>
+    <div id="vue" class="row">
+        <product-list :item="product"
+                        v-for="product in products">
+        </product-list>
     </div>
 </div>
 
 @section Scripts {
     <template id="list">
         <div class="col-md-4 text-center">
-            <img v-bind:src="parametr.pictureLink" width="300" height="300" />
+            <img v-bind:src="item.PictureLink" width="300" height="300" />
             <div>
-                <span style="font-size: 250%"><b>{{parametr.name}}</b></span>
+                <span style="font-size: 250%"><b>{{item.Name}}</b></span>
             </div>
             <div>
-                <span>Price: {{parametr.price}} PLN</span>
+                <span>Price: {{item.Price}} PLN</span>
             </div>
-            <div v-if="parametr.isLimited">
-                <span>Remaining: {{parametr.countLimited}}</span>
+            <div v-if="item.IsLimited">
+                <span>Remaining: {{item.CountLimited}}</span>
             </div>
             <input type="submit" value="[ ADD TO BASKET ]" />
         </div>
     </template>
 
     <script>
-        Vue.component('parameter-list', {
-            props: ['parametr'],
+        Vue.component('product-list', {
+            props: ['item'],
             template: '#list'
         });
 
         var vue = new Vue({
             el: '#vue',
             data: {
-                parameters: []
+                products: []
             },
             mounted() {
                 this.loadData()
@@ -53,7 +53,7 @@
                         method: 'get',
                         url: '/Product/Get',
                     }).then(response => {
-                        this.parameters = response.data
+                        this.products = response.data
                     }).catch (error => {
                         console.log(error.response.data)
                         let message = error.response.data + "\n\n" + error.response.status;

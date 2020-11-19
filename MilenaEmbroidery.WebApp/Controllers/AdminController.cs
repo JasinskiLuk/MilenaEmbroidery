@@ -33,9 +33,72 @@ namespace MilenaEmbroidery.WebApp.Controllers
             return View(products);
         }
 
-        public IActionResult BasicForm()
+        public async Task<IActionResult> BasicForm(int? id)
         {
-            return View();
+            ProductDTO product = null;
+
+            try
+            {
+                if (id == null)
+                    return View();
+
+                product = await _productService.Get((int)id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return View(product);
+        }
+
+        public async Task<IActionResult> Create(ProductDTO product)
+        {
+            try
+            {
+                await _productService.Create(product);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(ProductDTO product)
+        {
+            try
+            {
+                await _productService.Update(product);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool check = false;
+
+            try
+            {
+                check = await _productService.CheckIfExists(id);
+
+                if (!check)
+                    throw new Exception("Product not found");
+
+                await _productService.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

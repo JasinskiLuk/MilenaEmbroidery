@@ -36,11 +36,10 @@ namespace MilenaEmbroidery.DbServices.Shop
             {
                 var model = new { DTO.Name, DTO.IsLimited, DTO.CountLimited, DTO.DateAdded, DTO.Price, DTO.PictureLink };
 
-                id = await conn.ExecuteScalarAsync<int>(_procedures["createProductQuery"], new { model }, commandType: CommandType.StoredProcedure);
+                id = await conn.ExecuteScalarAsync<int>(_procedures["createProductQuery"], model, commandType: CommandType.StoredProcedure);
             }
             catch
             {
-
                 throw;
             }
 
@@ -57,7 +56,7 @@ namespace MilenaEmbroidery.DbServices.Shop
             {
                 var model = new { DTO.Id, DTO.Name, DTO.IsLimited, DTO.CountLimited, DTO.DateAdded, DTO.Price, DTO.PictureLink };
 
-                id = await conn.ExecuteScalarAsync<int>(_procedures["updateProductQuery"], new { model }, commandType: CommandType.StoredProcedure);
+                id = await conn.ExecuteScalarAsync<int>(_procedures["updateProductQuery"], model, commandType: CommandType.StoredProcedure);
             }
             catch
             {
