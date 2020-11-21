@@ -7,6 +7,7 @@ namespace MilenaEmbroidery.DTOs.Shop
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsLimited { get; set; }
+        public bool IsShown { get; set; }
         public decimal CountLimited { get; set; }
         public DateTime DateAdded { get; set; }
         public decimal Price { get; set; }
@@ -19,6 +20,7 @@ namespace MilenaEmbroidery.DTOs.Shop
         {
             Name = "Empty";
             IsLimited = false;
+            IsShown = true;
             CountLimited = 0;
             DateAdded = DateTime.Today;
             Price = 0;

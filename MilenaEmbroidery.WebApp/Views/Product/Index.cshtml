@@ -11,7 +11,9 @@
 <div id="products">
     <div id="vue" class="row">
         <product-list :item="product"
-                        v-for="product in products">
+                      v-for="product in products"
+                      v-bind:key="product.Id"
+                      v-if="product.IsShown">
         </product-list>
     </div>
 </div>
