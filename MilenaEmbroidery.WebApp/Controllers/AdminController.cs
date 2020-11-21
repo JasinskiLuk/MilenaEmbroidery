@@ -80,6 +80,22 @@ namespace MilenaEmbroidery.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            ProductDTO product = null;
+
+            try
+            {
+                product = await _productService.Get(id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return View(product);
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             bool check = false;

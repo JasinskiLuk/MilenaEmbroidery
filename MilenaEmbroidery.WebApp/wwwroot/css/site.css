@@ -76,3 +76,7 @@ body {
 .bg-white{
     background-color: blueviolet!important
 }
+
+.control-label {
+    font-weight: bold;
+}

@@ -1,6 +1,5 @@
 ﻿@model ProductDTO
 
-
 @{
     ViewData["Title"] = "Add/edit product";
     string title = "Create product";
@@ -18,49 +17,50 @@
     <h4>@title</h4>
     <hr />
     <div class="row">
-        <div class="col-md-4">
-            <form asp-action="@action">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input asp-for="Id" class="form-control" hidden />
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsLimited" /> @Html.DisplayNameFor(model => model.IsLimited)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CountLimited" class="control-label"></label>
-                    <input asp-for="CountLimited" class="form-control" />
-                    <span asp-validation-for="CountLimited" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DateAdded" class="control-label"></label>
-                    <input asp-for="DateAdded" class="form-control" />
-                    <span asp-validation-for="DateAdded" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PictureLink" class="control-label"></label>
-                    <input asp-for="PictureLink" class="form-control" />
-                    <span asp-validation-for="PictureLink" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="@action" class="btn btn-success" />
-                </div>
-            </form>
-        </div>
+        <form id="basicForm" asp-action="@action" class="col-12" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
+            <input asp-for="Id" class="form-control col-812" hidden />
+            <div class="form-group row row">
+                <label asp-for="Name" class="control-label col-4"></label>
+                <input asp-for="Name" class="form-control col-8 col-8" />
+                <span asp-validation-for="Name" class="text-danger col-12 col-12"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="IsLimited" class="control-label col-4"></label>
+                <input asp-for="IsLimited" class="form-control col-8" />
+            </div>
+            <div class="form-group row">
+                <label asp-for="IsShown" class="control-label col-4"></label>
+                <input asp-for="IsShown" class="form-control col-8" />
+            </div>
+            <div class="form-group row">
+                <label asp-for="CountLimited" class="control-label col-4"></label>
+                <input asp-for="CountLimited" class="form-control col-8" />
+                <span asp-validation-for="CountLimited" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="DateAdded" class="control-label col-4"></label>
+                <input asp-for="DateAdded" class="form-control col-8" />
+                <span asp-validation-for="DateAdded" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Price" class="control-label col-4"></label>
+                <input asp-for="Price" class="form-control col-8" />
+                <span asp-validation-for="Price" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PictureLink" class="control-label col-4"></label>
+                <input asp-for="PictureLink" class="form-control col-8" />
+                <span asp-validation-for="PictureLink" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+            </div>
+        </form>
     </div>
 
     <div>
-        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+        <input style="float: left;" type="button" onclick="location.href='@Url.Action("Index", "Admin")'" class="btn btn-secondary" value="Back to List" />
+        <input style="float: right;" type="submit" asp-controller="Admin" asp-action="@action" class="btn btn-success" form="basicForm" value="@title" />
     </div>
 
 </body>

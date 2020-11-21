@@ -1,0 +1,62 @@
+﻿@model MilenaEmbroidery.DTOs.Shop.ProductDTO
+
+@{ 
+    ViewData["Title"] = "Product details";
+    string title = "Details";
+}
+
+<div>
+    <h4>@title</h4>
+    <hr />
+    <dl class="row">
+        <dd class = "col-sm-12" hidden>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsLimited)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsLimited)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsShown)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsShown)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CountLimited)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CountLimited)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PictureLink)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PictureLink)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a style="float: left;" class="btn btn-secondary" asp-controller="Admin" asp-action="Index">Back to List</a>
+    <a style="float: right;" type="submit" asp-controller="Admin" asp-action="BasicForm" class="btn btn-success">Edit product</a>
+</div>
