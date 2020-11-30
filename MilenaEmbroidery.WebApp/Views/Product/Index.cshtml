@@ -66,3 +66,139 @@
         });
     </script>
 }
+    
+    
+    
+    
+    
+    
+    <!--
+
+@model Danwood.BIM.Core.DTOs.ProjectDTO
+
+@{
+    ViewData["Title"] = "Projekty";
+
+    string method = "post";
+    string submitTitle = "Utwórz";
+    string headerTitle = "tworzenie nowego projektu";
+
+    if (ViewData["action"] == "update")
+    {
+        method = "put";
+        submitTitle = "Zaktualizuj";
+        headerTitle = "edycja projektu";
+    }
+}
+
+<div id="app" class="container">
+    <h4>Projekty - @Html.Raw(headerTitle)</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form v-on:submit.prevent='formSubmit'>
+                <input type="hidden" id="projectId" v-model="projectId" />
+                <div class="form-group">
+                    <label class="control-label" for="number">Numer kontraktu/projektu</label>
+                    <input class="form-control" id="number" v-model="number" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="name">Nazwa kontraktu/projektu</label>
+                    <input class="form-control" id="name" v-model="name" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="description">Opis</label>
+                    <input class="form-control" id="description" v-model="description" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="marketId">Rynek</label>
+                    <select class="form-control" id="marketId" v-model="marketId">
+                        <option value="-1">Wybierz rynek</option>
+                        <option v-for="market in markets"
+                                v-bind:value="market.MarketId">
+                            {{ market.FriendlyName }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="@(Html.Raw(submitTitle))" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                requestVerificationToken: '@GetAntiXsrfRequestToken()',
+                projectId: @(Model?.ProjectId ?? -1),
+                marketId: @(Model?.MarketId ?? -1),
+                number: '@(Model?.Number.ToString() ?? "")',
+                name: '@(Model?.Name ?? "")',
+                description: '@(Model?.Description ?? "")',
+                markets: []
+            },
+            mounted() {
+                this.loadMarkets();
+            },
+            methods: {
+                loadMarkets: function () {
+                    axios({
+                        method: 'get',
+                        url: '@Url.Action("GetMarkets", "Dictionaries", new { Area = "api" })'
+                    })
+                    .then(response => this.markets = response.data)
+                    .catch(function (error) {
+                        document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
+                        document.getElementById('messageModalBody').innerHTML = error.response.data;
+
+                        $("#messageModal").modal('show');
+                    });
+                },
+                formSubmit(e) {
+                    e.preventDefault();
+
+                    axios({
+                        method: '@(Html.Raw(method))',
+                        url: '@Url.Action(ViewData["action"] as string, "Projects", new { Area = "api" })',
+                        data: {
+                            ProjectId: app.projectId,
+                            MarketId: app.marketId,
+                            Number: parseInt(app.number),
+                            Name: app.name,
+                            Description: app.description
+                        },
+                        headers: {
+                            RequestVerificationToken: app.requestVerificationToken
+                        }
+                    })
+                    .then(function (response) {
+                        location.href = "/projects/";
+                    })
+                    .catch(function (error) {
+                        document.getElementById('messageModalLabel').innerHTML = "Wystąpił błąd";
+                        document.getElementById('messageModalBody').innerHTML = error;
+
+                        $("#messageModal").modal('show');
+                    });
+                }
+            }
+        });
+    </script>
+}
+
+
+
+-->
+
