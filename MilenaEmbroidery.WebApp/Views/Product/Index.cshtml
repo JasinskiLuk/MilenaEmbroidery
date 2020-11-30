@@ -67,35 +67,8 @@
     </script>
 }
     
-    
-    
-    
-    
-    
     <!--
 
-@model Danwood.BIM.Core.DTOs.ProjectDTO
-
-@{
-    ViewData["Title"] = "Projekty";
-
-    string method = "post";
-    string submitTitle = "Utwórz";
-    string headerTitle = "tworzenie nowego projektu";
-
-    if (ViewData["action"] == "update")
-    {
-        method = "put";
-        submitTitle = "Zaktualizuj";
-        headerTitle = "edycja projektu";
-    }
-}
-
-<div id="app" class="container">
-    <h4>Projekty - @Html.Raw(headerTitle)</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
             <form v-on:submit.prevent='formSubmit'>
                 <input type="hidden" id="projectId" v-model="projectId" />
                 <div class="form-group">
@@ -124,17 +97,7 @@
                     <input type="submit" value="@(Html.Raw(submitTitle))" class="btn btn-primary" />
                 </div>
             </form>
-        </div>
-    </div>
-</div>
 
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
-@functions{
-    public string GetAntiXsrfRequestToken()
-    {
-        return Xsrf.GetAndStoreTokens(Context).RequestToken;
-    }
-}
 
 @section Scripts {
     <script type="text/javascript">
@@ -197,8 +160,6 @@
         });
     </script>
 }
-
-
 
 -->
 
