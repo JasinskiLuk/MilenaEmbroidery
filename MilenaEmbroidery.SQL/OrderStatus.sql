@@ -1,1 +1,1 @@
-﻿INSERT INTO [Shop].[OrderStatus] ([Name], [cODE]) VALUES ('', '')
+﻿INSERT INTO [Shop].[OrderStatus] ([Name], [Code]) VALUES ('Basket', 'BKT')

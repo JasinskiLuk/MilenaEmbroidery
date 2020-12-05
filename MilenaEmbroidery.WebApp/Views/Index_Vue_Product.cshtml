@@ -1,0 +1,85 @@
+﻿
+<div id="products">
+    <div id="vue" class="row">
+        <product-list :product="product"
+                      v-for="product in products"
+                      v-bind:key="product.Id"
+                      v-if="product.IsShown">
+        </product-list>
+    </div>
+</div>
+
+
+@section Scripts {
+    <template id="list">
+        <div class="col-md-4 text-center" v-on:submit.prevent="formSubmit">
+            <form id="productForm">
+                <img v-bind:src="product.PictureLink" width="300" height="300" />
+                <div>
+                    <input v-model="product.Name" hidden />
+                    <span style="font-size: 250%"><b>{{product.Name}}</b></span>
+                </div>
+                <div>
+                    <input v-model="product.Price" hidden />
+                    <span>Price: {{product.Price}} PLN</span>
+                </div>
+                <div v-if="product.IsLimited">
+                    <input v-model="product.CountLimited" hidden />
+                    <span>Remaining: {{product.CountLimited}}</span>
+                </div>
+                <input type="submit" value="[ ADD TO BASKET ]" />
+                <!-- FIX SUBMITING METHOD -->
+            </form>
+        </div>
+    </template>
+
+    <script>
+
+        /* VUE */
+        
+        Vue.component('product-list', {
+            props: ['product'],
+            template: '#list'
+        });
+
+        var vue = new Vue({
+            el: '#vue',
+            data: {
+                products: []
+            },
+            mounted() {
+                this.loadData()
+            },
+            methods: {
+                loadData() {
+                    axios({
+                        method: 'get',
+                        url: '/Product/Get',
+                    }).then(response => {
+                        this.products = response.data
+                    }).catch (error => {
+                        console.log(error.response.data)
+                        let message = error.response.data + "\n\n" + error.response.status;
+                        window.alert(message);
+                    })
+                },
+                formSubmit: function(e) {
+                    e.preventDefault();
+                    axios({
+                        method: 'post',
+                        url: '@Url.Action("AddOrder", "Products")',
+                        data: {
+                            Name: product.Name,
+                            Price: product.Price
+                        }
+                    }).then(function (response) {
+                        location.href = "/Product/Index";
+                    }).catch(function (error) {
+                        console.log(error.response.data)
+                    });
+                }
+            }
+        });
+        
+    </script>
+}

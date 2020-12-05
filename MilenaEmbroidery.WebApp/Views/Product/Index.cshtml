@@ -5,64 +5,34 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Welcome in Milena Embroidery Shop</h1>
 </div>
 
-<div id="products">
-    <div id="vue" class="row">
-        <product-list :item="product"
-                      v-for="product in products"
-                      v-bind:key="product.Id"
-                      v-if="product.IsShown">
-        </product-list>
-    </div>
+<div class="row">
+    @foreach (var product in Model)
+    {
+        if (product.IsShown)
+        {
+            <div class="col-md-4 text-center">
+                <form id="productForm" asp-action="AddOrder" asp-controller="Product">
+                    <input asp-for="@product.Name" hidden />
+                    <input asp-for="@product.Price" hidden />
+                    <input asp-for="@product.CountLimited" hidden />
+                    <img src="@product.PictureLink" width="300" height="300" />
+                    <div>
+                        <span style="font-size: 250%"><b>@product.Name</b></span>
+                    </div>
+                    <div>
+                        <span>Price: @product.Price PLN</span>
+                    </div>
+                    @if (product.IsLimited)
+                    {
+                        <span>Remaining: @product.CountLimited</span>
+                        <br />
+                    }
+                    <input type="submit" value="[ ADD TO BASKET ]" />
+                </form>
+            </div>
+        }
+    }
 </div>
-
-@section Scripts {
-    <template id="list">
-        <div class="col-md-4 text-center">
-            <img v-bind:src="item.PictureLink" width="300" height="300" />
-            <div>
-                <span style="font-size: 250%"><b>{{item.Name}}</b></span>
-            </div>
-            <div>
-                <span>Price: {{item.Price}} PLN</span>
-            </div>
-            <div v-if="item.IsLimited">
-                <span>Remaining: {{item.CountLimited}}</span>
-            </div>
-            <input type="submit" value="[ ADD TO BASKET ]" />
-        </div>
-    </template>
-
-    <script>
-        Vue.component('product-list', {
-            props: ['item'],
-            template: '#list'
-        });
-
-        var vue = new Vue({
-            el: '#vue',
-            data: {
-                products: []
-            },
-            mounted() {
-                this.loadData()
-            },
-            methods: {
-                loadData() {
-                    axios({
-                        method: 'get',
-                        url: '/Product/Get',
-                    }).then(response => {
-                        this.products = response.data
-                    }).catch (error => {
-                        console.log(error.response.data)
-                        let message = error.response.data + "\n\n" + error.response.status;
-                        window.alert(message);
-                    })
-                }
-            }
-        });
-    </script>
-}

@@ -1,0 +1,31 @@
+﻿@model MilenaEmbroidery.DTOs.General.UserDTO
+
+@{
+    ViewData["Title"] = "LogIn Form";
+    string title = "LogIn";
+}
+
+
+<h4>@title</h4>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" asp-controller="User">
+            <div class="form-group row">
+                <label asp-for="FirstName" class="control-label col-4"></label>
+                <input asp-for="FirstName" class="form-control col-8" />
+                <span asp-validation-for="FirstName" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="LastName" class="control-label col-4"></label>
+                <input asp-for="LastName" class="form-control col-8" />
+                <span asp-validation-for="LastName" class="text-danger col-12"></span>
+            </div>
+            <div class="form-group row">
+                <input type="submit" value="LogIn" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

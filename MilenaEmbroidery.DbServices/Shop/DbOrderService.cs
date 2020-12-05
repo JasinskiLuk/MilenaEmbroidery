@@ -1,46 +1,138 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MilenaEmbroidery.DTOs.Shop;
 using MilenaEmbroidery.IServices.Shop;
-using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.DbServices.Shop
 {
     public class DbOrderService : DbBaseService, IOrderService
     {
+        private static Dictionary<string, string> _procedures = new Dictionary<string, string>
+        {
+            { "createOrderQuery", "[Shop].[up_CreateOrder]" },
+            { "updateOrderQuery", "[Shop].[up_UpdateOrder]" },
+            { "deleteOrderQuery", "[Shop].[up_DeleteOrder]" },
+            { "getOrderQuery", "[Shop].[up_GetOrder]" },
+            { "getOrdersQuery", "[Shop].[up_GetOrders]" },
+            { "checkIfOrderExistQuery", "[Shop].[up_CheckIfOrderExist]" }
+        };
+
         public DbOrderService(IConfiguration configuration) : base(configuration)
         {
         }
 
-        public Task<int> Create(OrderDTO DTO)
+        public async Task<int> Create(OrderDTO DTO)
         {
-            throw new NotImplementedException();
+            int id = -1;
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                var model = new { DTO.UserId, DTO.OrderStatusId };
+
+                id = await conn.ExecuteScalarAsync<int>(_procedures["createORderQuery"], model, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return id;
         }
 
-        public Task<int> Update(OrderDTO DTO)
+        public async Task<int> Update(OrderDTO DTO)
         {
-            throw new NotImplementedException();
+            int id = -1;
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                var model = new { DTO.Id, DTO.UserId, DTO.OrderStatusId };
+
+                id = await conn.ExecuteScalarAsync<int>(_procedures["updateOrderQuery"], model, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+
+                throw;
+            }
+
+            return id;
         }
 
-        public Task Delete(int Id)
+        public async Task Delete(int Id)
         {
-            throw new NotImplementedException();
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                await conn.ExecuteAsync(_procedures["deleteOrderQuery"], new { Id }, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public Task<OrderDTO> Get(int Id)
+        public async Task<OrderDTO> Get(int UserId)
         {
-            throw new NotImplementedException();
+            OrderDTO order = null;
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                order = await conn.QueryFirstOrDefaultAsync<OrderDTO>(_procedures["getOrderQuery"], new { UserId }, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return order ?? new NullOrderDTO();
         }
 
-        public Task<IEnumerable<OrderDTO>> Get()
+        public async Task<IEnumerable<OrderDTO>> Get()
         {
-            throw new NotImplementedException();
+            IEnumerable<OrderDTO> orders = Enumerable.Empty<OrderDTO>();
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                orders = await conn.QueryAsync<OrderDTO>(_procedures["getOrdersQuery"], commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return orders;
         }
 
-        public Task<bool> CheckIfExists(int Id)
+        public async Task<bool> CheckIfExists(int Id)
         {
-            throw new NotImplementedException();
+            bool check = false;
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                check = await conn.ExecuteScalarAsync<bool>(_procedures["checkIfOrderExistQuery"], new { Id }, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return check;
         }
     }
 }

@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MilenaEmbroidery.DbServices.General;
 using MilenaEmbroidery.DbServices.Shop;
+using MilenaEmbroidery.IServices.General;
 using MilenaEmbroidery.IServices.Shop;
 using System;
 using System.Data;
@@ -26,7 +28,13 @@ namespace MilenaEmbroidery.WebApp
                     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.AddSession();
+
             services.AddScoped<IProductService, DbProductService>();
+            services.AddScoped<IOrderService, DbOrderService>();
+            services.AddScoped<IOrderListService, DbOrderListService>();
+            services.AddScoped<IOrderStatusService, DbOrderStatusService>();
+            services.AddScoped<IUserService, DbUserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,6 +61,8 @@ namespace MilenaEmbroidery.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
