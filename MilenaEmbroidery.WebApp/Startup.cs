@@ -1,6 +1,8 @@
 using Dapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,8 +26,10 @@ namespace MilenaEmbroidery.WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
-                    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+            services.AddControllersWithViews(options => options
+                    .ModelBinderProviders.RemoveType<DateTimeModelBinderProvider>())
+                    .AddJsonOptions(options => options
+                            .JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             services.AddSession();

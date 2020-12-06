@@ -36,7 +36,7 @@ namespace MilenaEmbroidery.DbServices.Shop
             {
                 var model = new { DTO.UserId, DTO.OrderStatusId };
 
-                id = await conn.ExecuteScalarAsync<int>(_procedures["createORderQuery"], model, commandType: CommandType.StoredProcedure);
+                id = await conn.ExecuteScalarAsync<int>(_procedures["createOrderQuery"], model, commandType: CommandType.StoredProcedure);
             }
             catch
             {
