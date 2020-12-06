@@ -15,11 +15,13 @@ namespace MilenaEmbroidery.WebApp.Controllers
     {
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
+        private readonly IOrderListService _orderListService;
 
-        public ProductController(IProductService productService, IOrderService orderService)
+        public ProductController(IProductService productService, IOrderService orderService, IOrderListService orderListService)
         {
             _productService = productService;
             _orderService = orderService;
+            _orderListService = orderListService;
         }
 
         public async Task<IActionResult> Index()
@@ -78,14 +80,23 @@ namespace MilenaEmbroidery.WebApp.Controllers
                     order.Id = await _orderService.Create(order);
                 }
 
-                
+                OrderListDTO orderList = new OrderListDTO
+                {
+                    OrderId = order.Id,
+                    ProductId = product.Id,
+                    Quantity = 1
+                };
+
+                int orderListId = await _orderListService.Create(orderList);
+
+                HttpContext.Session.SetInt32("OrderListId", orderListId);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return Ok();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

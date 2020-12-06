@@ -27,7 +27,7 @@ namespace MilenaEmbroidery.WebApp.Controllers
         {
             try
             {
-                HttpContext.Session.SetInt32("UserId", 1);
+                HttpContext.Session.SetInt32("UserId", 2);
                 HttpContext.Session.SetString("Login", user.FirstName);
             }
             catch (Exception ex)

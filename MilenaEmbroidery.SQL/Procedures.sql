@@ -263,3 +263,127 @@ BEGIN
 
 END
 GO
+
+
+/* OrderList Procedures */
+
+CREATE OR ALTER PROCEDURE [Shop].[up_CreateOrderList]
+	@OrderId INT,
+	@ProductId INT,
+	@Quantity INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    INSERT INTO
+		[Shop].[OrderLists]
+	OUTPUT
+		INSERTED.[Id]
+	VALUES(
+		@OrderId,
+		@ProductId,
+		@Quantity);
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [Shop].[up_UpdateOrderList]
+    @Id INT,
+	@OrderId INT,
+	@ProductId INT,
+	@Quantity INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    UPDATE
+		[Shop].[OrderLists]
+	SET
+		[OrderId] = @OrderId,
+		[ProductId] = @ProductId,
+		[Quantity] = @Quantity
+	OUTPUT
+		INSERTED.[Id]
+	WHERE
+		[Id] = @Id;
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [Shop].[up_DeleteOrderList]
+    @Id INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    DELETE
+		[Shop].[OrderLists]
+	OUTPUT
+		DELETED.[Id]
+    WHERE
+		[Id] = @Id;
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [Shop].[up_GetOrderList]
+    @OrderId INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		[Id],
+		[OrderId],
+		[ProductId],
+		[Quantity]
+    FROM
+		[Shop].[OrderLists]
+    WHERE
+		[OrderId] = @OrderId;
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [Shop].[up_GetOrderLists]
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		[Id],
+		[OrderId],
+		[ProductId],
+		[Quantity]
+    FROM
+		[Shop].[OrderLists];
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [Shop].[up_CheckIfOrderListExist]
+    @Id INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		COUNT(1)
+    FROM
+		[Shop].[OrderLists]
+    WHERE
+		[Id] = @Id;
+
+END
+GO
