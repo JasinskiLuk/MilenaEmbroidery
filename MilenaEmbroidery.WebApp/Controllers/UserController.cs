@@ -23,11 +23,39 @@ namespace MilenaEmbroidery.WebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Login(UserDTO user)
+        public async Task<IActionResult> UserForm()
         {
+            UserDTO user = null;
+
             try
             {
-                HttpContext.Session.SetInt32("UserId", 2);
+                int? userId = HttpContext.Session.GetInt32("UserId");
+
+                if (userId == null)
+                    throw new Exception("USerId is null! Cannot get data.");
+
+                user = await _userService.Get((int)userId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> Login(UserDTO user)
+        {
+            int loggedUserId = -1;
+
+            try
+            {
+                loggedUserId = await _userService.Login(user.FirstName, user.LastName);
+
+                if (loggedUserId < 1)
+                    throw new Exception("Login Failed. Data not found.");
+
+                HttpContext.Session.SetInt32("UserId", loggedUserId);
                 HttpContext.Session.SetString("Login", user.FirstName);
             }
             catch (Exception ex)

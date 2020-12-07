@@ -387,3 +387,147 @@ BEGIN
 
 END
 GO
+
+
+/* User Procedures */
+
+CREATE OR ALTER PROCEDURE [General].[up_CreateUser]
+	@FirstName NVARCHAR(150),
+	@LastName NVARCHAR(150),
+	@Email NVARCHAR(150),
+	@Country NVARCHAR(150),
+	@City NVARCHAR(150),
+	@Street NVARCHAR(150),
+	@PlotNo NVARCHAR(25),
+	@ApartmentNo NVARCHAR(25),
+	@IsAdmin BIT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    INSERT INTO
+		[General].[Users]
+	OUTPUT
+		INSERTED.[Id]
+	VALUES(
+		@FirstName,
+		@LastName,
+		@Email,
+		@Country,
+		@City,
+		@Street,
+		@PlotNo,
+		@ApartmentNo,
+		@IsAdmin);
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [General].[up_UpdateUser]
+    @Id INT,
+	@FirstName NVARCHAR(150),
+	@LastName NVARCHAR(150),
+	@Email NVARCHAR(150),
+	@Country NVARCHAR(150),
+	@City NVARCHAR(150),
+	@Street NVARCHAR(150),
+	@PlotNo NVARCHAR(25),
+	@ApartmentNo NVARCHAR(25),
+	@IsAdmin BIT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    UPDATE
+		[General].[Users]
+	SET
+		[FirstName] = @FirstName,
+		[LastName] = @LastName,
+		[Email] = @Email,
+		[Country] = @Country,
+		[City] = @City,
+		[Street] = @Street,
+		[PlotNo] = @PlotNo,
+		[ApartmentNo] = @ApartmentNo,
+		[IsAdmin] = @IsAdmin
+	OUTPUT
+		INSERTED.[Id]
+	WHERE
+		[Id] = @Id;
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [General].[up_GetUser]
+    @Id INT
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		[Id],
+		[FirstName],
+		[LastName],
+		[Email],
+		[Country],
+		[City],
+		[Street],
+		[PlotNo],
+		[ApartmentNo],
+		[IsAdmin]
+    FROM
+		[General].[Users]
+    WHERE
+		[Id] = @Id;
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [General].[up_GetUsers]
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		[Id],
+		[FirstName],
+		[LastName],
+		[Email],
+		[Country],
+		[City],
+		[Street],
+		[PlotNo],
+		[ApartmentNo],
+		[IsAdmin]
+    FROM
+		[General].[Users];
+		
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [General].[up_LoginUser]
+    @FirstName NVARCHAR(150),
+	@LastName NVARCHAR(150)
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    SELECT
+		[Id]
+    FROM
+		[General].[Users]
+    WHERE
+		[FirstName] = @FirstName
+		AND [LastName] = @LastName;
+
+END
+GO
