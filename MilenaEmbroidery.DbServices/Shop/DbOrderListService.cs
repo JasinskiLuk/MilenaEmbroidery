@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using TestingProject.Interfaces;
 
 namespace MilenaEmbroidery.DbServices.Shop
 {
@@ -82,22 +83,40 @@ namespace MilenaEmbroidery.DbServices.Shop
             }
         }
 
-        public async Task<OrderListDTO> Get(int UserId)
+        public async Task<OrderListDTO> Get(int OrderId)
         {
-            OrderListDTO OrderList = null;
+            OrderListDTO orderList = null;
 
             SqlConnection conn = new SqlConnection(_connectionString);
 
             try
             {
-                OrderList = await conn.QueryFirstOrDefaultAsync<OrderListDTO>(_procedures["getOrderListQuery"], new { UserId }, commandType: CommandType.StoredProcedure);
+                orderList = await conn.QueryFirstOrDefaultAsync<OrderListDTO>(_procedures["getOrderListQuery"], new { OrderId }, commandType: CommandType.StoredProcedure);
             }
             catch
             {
                 throw;
             }
 
-            return OrderList ?? new NullOrderListDTO();
+            return orderList ?? new NullOrderListDTO();
+        }
+
+        public async Task<IEnumerable<OrderListDTO>> GetByOrderId(int OrderId)
+        {
+            IEnumerable<OrderListDTO> ordersList = Enumerable.Empty<OrderListDTO>();
+
+            SqlConnection conn = new SqlConnection(_connectionString);
+
+            try
+            {
+                ordersList = await conn.QueryAsync<OrderListDTO>(_procedures["getOrderListQuery"], new { OrderId }, commandType: CommandType.StoredProcedure);
+            }
+            catch
+            {
+                throw;
+            }
+
+            return ordersList;
         }
 
         public async Task<IEnumerable<OrderListDTO>> Get()

@@ -59,6 +59,7 @@ namespace MilenaEmbroidery.WebApp.Controllers
         public async Task<IActionResult> AddOrder(ProductDTO product)
         {
             OrderDTO order = null;
+            IEnumerable<OrderListDTO> ordersList = Enumerable.Empty<OrderListDTO>();
 
             try
             {
@@ -80,16 +81,23 @@ namespace MilenaEmbroidery.WebApp.Controllers
                     order.Id = await _orderService.Create(order);
                 }
 
-                OrderListDTO orderList = new OrderListDTO
+                ordersList = await _orderListService.GetByOrderId(order.Id);
+
+                //TODO: Change this IF. Add checking products in list, and increment qty if exist. If not, add item to list
+
+                if (!ordersList.Any())
                 {
-                    OrderId = order.Id,
-                    ProductId = product.Id,
-                    Quantity = 1
-                };
+                    OrderListDTO orderList = new OrderListDTO
+                    {
+                        OrderId = order.Id,
+                        ProductId = product.Id,
+                        Quantity = 1
+                    };
 
-                int orderListId = await _orderListService.Create(orderList);
+                    await _orderListService.Create(orderList);
+                }
 
-                HttpContext.Session.SetInt32("OrderListId", orderListId);
+                HttpContext.Session.SetInt32("OrderId", order.Id);
             }
             catch (Exception ex)
             {

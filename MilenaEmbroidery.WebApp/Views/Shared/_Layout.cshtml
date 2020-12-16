@@ -1,6 +1,6 @@
 ﻿@{ 
     var login = Context.Session.GetString("Login");
-    var basket = Context.Session.GetInt32("OrderListId");
+    var basket = Context.Session.GetInt32("OrderId");
 }
 
 <!DOCTYPE html>
@@ -46,6 +46,7 @@
                 @if (login != null)
                 {
                     <a class="nav-link text-dark" asp-controller="User" asp-action="UserForm">@login</a>
+                    <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a>
                 }
                 else
                 {
