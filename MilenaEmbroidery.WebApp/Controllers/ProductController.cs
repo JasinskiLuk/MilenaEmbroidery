@@ -83,8 +83,6 @@ namespace MilenaEmbroidery.WebApp.Controllers
 
                 ordersList = await _orderListService.GetByOrderId(order.Id);
 
-                //TODO: Change this IF. Add checking products in list, and increment qty if exist. If not, add item to list
-
                 if (!ordersList.Any())
                 {
                     OrderListDTO orderList = new OrderListDTO
@@ -95,6 +93,17 @@ namespace MilenaEmbroidery.WebApp.Controllers
                     };
 
                     await _orderListService.Create(orderList);
+                }
+                else
+                {
+                    foreach (var item in ordersList)
+                        if (item.ProductId == product.Id)
+                        {
+                            item.Quantity++;
+                            await _orderListService.Update(item);
+                        }
+                        else
+                            await _orderListService.Create(item);
                 }
 
                 HttpContext.Session.SetInt32("OrderId", order.Id);
