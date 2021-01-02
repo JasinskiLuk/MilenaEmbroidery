@@ -1,0 +1,60 @@
+﻿
+@model IEnumerable<ProductDTO>
+
+@{
+    ViewData["Title"] = "Product page";
+}
+
+<p>
+    <a class="btn btn-success" asp-area="Admin" asp-controller="Product" asp-action="BasicForm">Add new product</a>
+</p>
+
+<table class="table" style="background-color:aliceblue">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLimited)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountLimited)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsLimited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountLimited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-area="Admin" asp-controller="Product" asp-action="BasicForm" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

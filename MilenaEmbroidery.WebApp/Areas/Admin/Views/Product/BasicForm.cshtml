@@ -20,7 +20,7 @@
 <div class="row">
     <form id="basicForm" class="col-12" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
-        <input asp-for="Id" class="form-control col-812" hidden />
+        <input asp-for="Id" class="form-control col-12" hidden />
         <div class="form-group row">
             <label asp-for="Name" class="control-label col-4"></label>
             <input asp-for="Name" class="form-control col-8" />
@@ -54,12 +54,10 @@
             <input asp-for="PictureLink" class="form-control col-8" />
             <span asp-validation-for="PictureLink" class="text-danger col-12"></span>
         </div>
-        <div class="form-group row">
-        </div>
     </form>
 </div>
 
 <div>
-    <input style="float: left;" type="button" onclick="location.href='@Url.Action("Index", "Admin")'" class="btn btn-secondary" value="Back to List" />
-    <input style="float: right;" type="submit" asp-area="Admin" asp-controller="Admin" asp-action="@action" class="btn btn-success" form="basicForm" value="@title" />
+    <a style="float: left;" class="btn btn-secondary" asp-area="Admin" asp-controller="Product" asp-action="Index">Back to List</a>
+    <input style="float: right;" type="submit" asp-area="Admin" asp-controller="Product" asp-action="@action" class="btn btn-success" form="basicForm" value="@title" />
 </div>
