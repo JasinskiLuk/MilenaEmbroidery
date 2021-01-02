@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.WebApp.Controllers
 {
+    [Area("Shop")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

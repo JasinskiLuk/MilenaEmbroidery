@@ -108,22 +108,22 @@ namespace MilenaEmbroidery.DbServices.General
             throw new NotImplementedException();
         }
 
-        public async Task<int> Login(string FirstName, string LastName)
+        public async Task<UserDTO> Login(string FirstName, string LastName)
         {
-            int loggedUserId = -1;
+            UserDTO loggedUser = null;
 
             SqlConnection conn = new SqlConnection(_connectionString);
 
             try
             {
-                loggedUserId = await conn.ExecuteScalarAsync<int>(_procedures["loginQuery"], new { FirstName, LastName }, commandType: CommandType.StoredProcedure);
+                loggedUser = await conn.QueryFirstOrDefaultAsync<UserDTO>(_procedures["loginQuery"], new { FirstName, LastName }, commandType: CommandType.StoredProcedure);
             }
             catch
             {
                 throw;
             }
 
-            return loggedUserId;
+            return loggedUser ?? new NullUserDTO();
         }
     }
 }

@@ -7,6 +7,6 @@ namespace MilenaEmbroidery.IServices.General
     public interface IUserService : ICreateUpdateService<UserDTO>, IReadService<UserDTO>, IReadCollectionService<UserDTO>
     {
         // TODO:  Add autenthications to app
-        Task<int> Login(string FirstName, string LastName);
+        Task<UserDTO> Login(string FirstName, string LastName);
     }
 }

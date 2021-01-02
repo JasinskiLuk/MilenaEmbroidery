@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.WebApp.Controllers
 {
+    [Area("Admin")]
     public class AdminController : Controller
     {
         private readonly IProductService _productService;

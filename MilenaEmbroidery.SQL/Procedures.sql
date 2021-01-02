@@ -522,7 +522,10 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-		[Id]
+		[Id],
+		[FirstName],
+		[LastName],
+		[IsAdmin]
     FROM
 		[General].[Users]
     WHERE
