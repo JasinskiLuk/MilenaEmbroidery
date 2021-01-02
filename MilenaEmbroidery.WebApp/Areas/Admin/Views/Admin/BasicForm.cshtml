@@ -61,5 +61,5 @@
 
 <div>
     <input style="float: left;" type="button" onclick="location.href='@Url.Action("Index", "Admin")'" class="btn btn-secondary" value="Back to List" />
-    <input style="float: right;" type="submit" asp-controller="Admin" asp-action="@action" class="btn btn-success" form="basicForm" value="@title" />
+    <input style="float: right;" type="submit" asp-area="Admin" asp-controller="Admin" asp-action="@action" class="btn btn-success" form="basicForm" value="@title" />
 </div>

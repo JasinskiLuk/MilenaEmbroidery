@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MilenaEmbroidery.WebApp.Controllers
 {
+    [Area("Shop")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -50,21 +51,22 @@ namespace MilenaEmbroidery.WebApp.Controllers
 
         public async Task<IActionResult> Login(UserDTO user)
         {
-            int loggedUserId = -1;
+            UserDTO loggedUser = null;
             OrderDTO order = null;
 
             try
             {
-                loggedUserId = await _userService.Login(user.FirstName, user.LastName);
+                loggedUser = await _userService.Login(user.FirstName, user.LastName);
 
-                if (loggedUserId < 1)
+                if (loggedUser is NullUserDTO)
                     throw new Exception("Login Failed. Data not found.");
 
-                order = await _orderService.Get(loggedUserId);
+                order = await _orderService.Get(loggedUser.Id);
 
-                HttpContext.Session.SetInt32("UserId", loggedUserId);
-                HttpContext.Session.SetString("Login", user.FirstName);
+                HttpContext.Session.SetInt32("UserId", loggedUser.Id);
+                HttpContext.Session.SetString("Login", loggedUser.FirstName);
                 HttpContext.Session.SetInt32("OrderId", order.Id);
+                HttpContext.Session.SetString("IsAdmin", loggedUser.IsAdmin.ToString());
             }
             catch (Exception ex)
             {

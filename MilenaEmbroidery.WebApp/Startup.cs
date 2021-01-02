@@ -73,15 +73,12 @@ namespace MilenaEmbroidery.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "MyAreas",
+                   pattern: "{area=Shop}/{controller=Product}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Product}/{action=Index}/{id?}");
-
-                //Endpoint for Areas
-                /*
-                endpoints.MapControllerRoute(
-                   name: "MyAreas",
-                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                */
             });
         }
     }
