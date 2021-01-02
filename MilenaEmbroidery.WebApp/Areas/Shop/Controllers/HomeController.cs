@@ -2,23 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using MilenaEmbroidery.DTOs.Shop;
 using MilenaEmbroidery.IServices.Shop;
-using MilenaEmbroidery.WebApp.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MilenaEmbroidery.WebApp.Controllers
+namespace MilenaEmbroidery.WebApp.Areas.Shop.Controllers
 {
-    [Area("Shop")]
-    public class ProductController : Controller
+    [Area("shop")]
+    public class HomeController : Controller
     {
         private readonly IProductService _productService;
         private readonly IOrderService _orderService;
         private readonly IOrderListService _orderListService;
 
-        public ProductController(IProductService productService, IOrderService orderService, IOrderListService orderListService)
+        public HomeController(IProductService productService, IOrderService orderService, IOrderListService orderListService)
         {
             _productService = productService;
             _orderService = orderService;
@@ -120,12 +118,6 @@ namespace MilenaEmbroidery.WebApp.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

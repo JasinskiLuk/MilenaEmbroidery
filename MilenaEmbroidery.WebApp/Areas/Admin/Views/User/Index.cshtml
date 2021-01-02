@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MilenaEmbroidery.DTOs.General.UserDTO>
+
+@{
+    ViewData["Title"] = "User page";
+}
+
+<p>
+    <a class="btn btn-success" asp-area="Admin" asp-controller="User" asp-action="BasicForm">Add new product</a>
+</p>
+
+<table class="table" style="background-color:aliceblue">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlotNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApartmentNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Street)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlotNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApartmentNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAdmin)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-area="Admin" asp-controller="User" asp-action="BasicForm" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,63 +1,63 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MilenaEmbroidery.DTOs.Shop;
-using MilenaEmbroidery.IServices.Shop;
+using MilenaEmbroidery.DTOs.General;
+using MilenaEmbroidery.IServices.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MilenaEmbroidery.WebApp.Controllers
+namespace MilenaEmbroidery.WebApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class AdminController : Controller
+    [Area("admin")]
+    public class UserController : Controller
     {
-        private readonly IProductService _productService;
+        private readonly IUserService _userService;
 
-        public AdminController(IProductService productService)
+        public UserController(IUserService userService)
         {
-            _productService = productService;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductDTO> products = Enumerable.Empty<ProductDTO>();
+            IEnumerable<UserDTO> users = Enumerable.Empty<UserDTO>();
 
             try
             {
-                products = await _productService.Get();
+                users = await _userService.Get();
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return View(products);
+            return View(users);
         }
 
         public async Task<IActionResult> BasicForm(int? id)
         {
-            ProductDTO product = null;
+            UserDTO user = null;
 
             try
             {
                 if (id == null)
                     return View();
 
-                product = await _productService.Get((int)id);
+                user = await _userService.Get((int)id);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return View(product);
+            return View(user);
         }
 
-        public async Task<IActionResult> Create(ProductDTO product)
+        public async Task<IActionResult> Create(UserDTO user)
         {
             try
             {
-                await _productService.Create(product);
+                await _userService.Create(user);
             }
             catch (Exception ex)
             {
@@ -67,11 +67,11 @@ namespace MilenaEmbroidery.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Update(ProductDTO product)
+        public async Task<IActionResult> Update(UserDTO user)
         {
             try
             {
-                await _productService.Update(product);
+                await _userService.Update(user);
             }
             catch (Exception ex)
             {
@@ -83,32 +83,33 @@ namespace MilenaEmbroidery.WebApp.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            ProductDTO product = null;
+            UserDTO user = null;
 
             try
             {
-                product = await _productService.Get(id);
+                user = await _userService.Get(id);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return View(product);
+            return View(user);
         }
 
+        /*
         public async Task<IActionResult> Delete(int id)
         {
             bool check = false;
 
             try
             {
-                check = await _productService.CheckIfExists(id);
+                check = await _userService.CheckIfExists(id);
 
                 if (!check)
-                    throw new Exception("Product not found");
+                    throw new Exception("User not found");
 
-                await _productService.Delete(id);
+                await _userService.Delete(id);
             }
             catch (Exception ex)
             {
@@ -117,5 +118,6 @@ namespace MilenaEmbroidery.WebApp.Controllers
 
             return RedirectToAction("Index");
         }
+        */
     }
 }

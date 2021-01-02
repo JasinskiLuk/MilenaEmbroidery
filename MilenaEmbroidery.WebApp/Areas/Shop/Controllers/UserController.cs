@@ -7,9 +7,9 @@ using MilenaEmbroidery.IServices.Shop;
 using System;
 using System.Threading.Tasks;
 
-namespace MilenaEmbroidery.WebApp.Controllers
+namespace MilenaEmbroidery.WebApp.Areas.Shop.Controllers
 {
-    [Area("Shop")]
+    [Area("shop")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -73,7 +73,7 @@ namespace MilenaEmbroidery.WebApp.Controllers
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Logout()
@@ -87,7 +87,7 @@ namespace MilenaEmbroidery.WebApp.Controllers
                 return StatusCode(500, ex.GetBaseException().Message);
             }
 
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
