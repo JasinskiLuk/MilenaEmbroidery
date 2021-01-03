@@ -1,0 +1,64 @@
+﻿@model UserDTO
+
+@{
+    ViewData["Title"] = "Edit user";
+    string title = "Update data";
+}
+
+
+<h4>@title</h4>
+
+<hr />
+
+<div class="row">
+    <form id="basicForm" class="col-12" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
+        <input asp-for="Id" class="form-control col-8 col-12" hidden />
+        <input asp-for="IsAdmin" class="form-control col-12" hidden />
+        <div class="form-group row">
+            <label asp-for="FirstName" class="control-label col-4"></label>
+            <input asp-for="FirstName" class="form-control col-8" />
+            <span asp-validation-for="FirstName" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="LastName" class="control-label col-4"></label>
+            <input asp-for="LastName" class="form-control col-8" />
+            <span asp-validation-for="LastName" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Email" class="control-label col-4"></label>
+            <input asp-for="Email" class="form-control col-8" />
+            <span asp-validation-for="Email" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Country" class="control-label col-4"></label>
+            <input asp-for="Country" class="form-control col-8" />
+            <span asp-validation-for="Country" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="City" class="control-label col-4"></label>
+            <input asp-for="City" class="form-control col-8" />
+            <span asp-validation-for="City" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Street" class="control-label col-4"></label>
+            <input asp-for="Street" class="form-control col-8" />
+            <span asp-validation-for="Street" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PlotNo" class="control-label col-4"></label>
+            <input asp-for="PlotNo" class="form-control col-8" />
+            <span asp-validation-for="PlotNo" class="text-danger col-12"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ApartmentNo" class="control-label col-4"></label>
+            <input asp-for="ApartmentNo" class="form-control col-8" />
+            <span asp-validation-for="ApartmentNo" class="text-danger col-12"></span>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a style="float: left;" class="btn btn-secondary" asp-area="Shop" asp-controller="User" asp-action="Index">Back to List</a>
+    <input style="float: right;" type="submit" asp-area="Shop" asp-controller="User" asp-action="Update" class="btn btn-success" form="basicForm" value="@title" />
+</div>
