@@ -37,7 +37,7 @@ namespace MilenaEmbroidery.WebApp.Areas.Shop.Controllers
                 int? userId = HttpContext.Session.GetInt32("UserId");
 
                 if (userId == null)
-                    throw new Exception("USerId is null! Cannot get data.");
+                    throw new Exception("UserId is null! Cannot get data.");
 
                 user = await _userService.Get((int)userId);
             }
@@ -47,6 +47,41 @@ namespace MilenaEmbroidery.WebApp.Areas.Shop.Controllers
             }
 
             return View(user);
+        }
+
+        public async Task<IActionResult> EditForm()
+        {
+            UserDTO user = null;
+
+            try
+            {
+                int? userId = HttpContext.Session.GetInt32("UserId");
+
+                if (userId == null)
+                    throw new Exception("UserId is null! Cannot get data.");
+
+                user = await _userService.Get((int)userId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> Update(UserDTO user)
+        {
+            try
+            {
+                await _userService.Update(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.GetBaseException().Message);
+            }
+
+            return RedirectToAction("UserForm");
         }
 
         public async Task<IActionResult> Login(UserDTO user)
@@ -63,9 +98,11 @@ namespace MilenaEmbroidery.WebApp.Areas.Shop.Controllers
 
                 order = await _orderService.Get(loggedUser.Id);
 
+                if (order.Id > 0)
+                    HttpContext.Session.SetInt32("OrderId", order.Id);
+
                 HttpContext.Session.SetInt32("UserId", loggedUser.Id);
                 HttpContext.Session.SetString("Login", loggedUser.FirstName);
-                HttpContext.Session.SetInt32("OrderId", order.Id);
                 HttpContext.Session.SetString("IsAdmin", loggedUser.IsAdmin.ToString());
             }
             catch (Exception ex)
